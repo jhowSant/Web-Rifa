@@ -14,10 +14,10 @@ class BilhetesSchema extends Schema {
         .inTable("rifa")
         .notNullable();
       table
-        .integer("usuario_id")
+        .integer("user_id")
         .unsigned()
         .references("id")
-        .inTable("usuarios");
+        .inTable("users");
       table.integer("numero").notNullable();
       table.timestamps();
     });

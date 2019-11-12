@@ -5,8 +5,8 @@ const Model = use('Model')
 
 class Token extends Model {
 
-  usuarios () {
-    return this.belongsTo('App/Models/Usuario')
+  users () {
+    return this.belongsTo('App/Models/User')
   }
 
 }

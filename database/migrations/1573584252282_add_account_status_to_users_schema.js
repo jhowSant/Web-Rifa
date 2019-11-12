@@ -5,13 +5,13 @@ const Schema = use('Schema')
 
 class AddAccountStatusToUsersSchema extends Schema {
   up () {
-    this.table('usuarios', (table) => {
+    this.table('users', (table) => {
       table.string('account_status', 15).notNullable().defaultTo('pending');
     })
   }
 
   down () {
-    this.table('usuarios', (table) => {
+    this.table('users', (table) => {
       table.dropColumn('account_status');
     })
   }

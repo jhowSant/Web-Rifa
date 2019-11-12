@@ -71,7 +71,7 @@ module.exports = {
   | The model to be used for verifying and creating users
   |
   */
-  model: 'App/Models/Usuarios',
+  model: 'App/Models/User',
 
   /*
   |--------------------------------------------------------------------------
