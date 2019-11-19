@@ -5,6 +5,11 @@ const Model = use('Model')
 
 class Token extends Model {
 
+  user () {
+    return this.belongsTo('App/Models/User')
+  }
+
+
   users () {
     return this.belongsTo('App/Models/User')
   }

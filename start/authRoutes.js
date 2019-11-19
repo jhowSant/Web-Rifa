@@ -32,4 +32,4 @@ Route.get(registerRoute, "AuthController.getRegister");
 Route.get(loginRoute, "AuthController.getLogin");
 Route.get(passwordResetRoute, "AuthController.getResetPassword");
 Route.get(logoutRoute, "AuthController.getLogout");
-Route.get(registrationSuccessRoute, "AuthController.getAuthDashboard");
+

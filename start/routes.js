@@ -1,7 +1,8 @@
 "use strict";
 
+require("./authRoutes.js");
 
-require('./authRoutes.js');
+require("./authRoutes.js");
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,9 @@ require('./authRoutes.js');
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use("Route");
 
-Route.on("/").render("login");
+Route.any("/", ({ response }) => response.redirect("/login"));
 
-Route.resource("tarefas", "TarefaController");
+
+  Route.resource('rifas', 'RifaController');
+
+

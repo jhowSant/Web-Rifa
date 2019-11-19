@@ -8,9 +8,9 @@ class AuthController {
   async login({ request, auth, response, session }) {
     const payload = request.only(["uid", "password"]);
 
-    const users = await Persona.verify(payload);
+    const user = await Persona.verify(payload);
 
-    await auth.login(users);
+    await auth.login(user);
     response.redirect(Config.get("adonis-auth-scaffold.registrationSuccessRedirectTo"));
   }
 
@@ -33,10 +33,10 @@ class AuthController {
       return response.redirect("back");
     }
 
-    const users = await Persona.register(payload);
+    const user = await Persona.register(payload);
 
     // optional
-    await auth.login(users);
+    await auth.login(user);
     response.redirect(Config.get("adonis-auth-scaffold.registrationSuccessRedirectTo"));
   }
 
@@ -52,9 +52,9 @@ class AuthController {
     }
 
     try {
-      const users = await Persona.updatePasswordByToken(token, payload);
+      const user = await Persona.updatePasswordByToken(token, payload);
 
-      await auth.login(users);
+      await auth.login(user);
       return response.redirect(Config.get("adonis-auth-scaffold.registrationSuccessRedirectTo"));
     } catch (error) {
       if (error.name === 'InvalidTokenException') {

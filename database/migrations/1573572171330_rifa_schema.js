@@ -17,7 +17,7 @@ class RifaSchema extends Schema {
         .integer("tipo_id")
         .unsigned()
         .references("id")
-        .inTable("tipo")
+        .inTable("tipos")
         .notNullable();
       table.string("titulo", 45).notNullable();
       table.text("descricao");

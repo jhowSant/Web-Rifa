@@ -1,0 +1,62 @@
+
+<form action="{{ rifa.id ? route('rifas.update', { id: rifa.id }) + '?_method=PUT' : route('rifas.store') }}" method="POST">
+  {{ csrfField() }}
+
+  <div class="form-group">
+    <label for="rifa_titulo">Título</label>
+    <input type="text" class="form-control" id="rifa_titulo" name="titulo" value="{{ old('titulo', rifa.titulo || '') }}">
+    @if(hasErrorFor('titulo'))
+      <small class="form-text text-danger">{{ getErrorFor('titulo') }}</small>
+    @endif
+  </div>
+  <div class="form-group">
+    <label for="rifa_descricao">Descrição</label>
+    <textarea class="form-control" id="rifa_descricao" name="descricao" rows="3">{{ old('descricao', rifa.descricao || '') }}</textarea>
+    @if(hasErrorFor('descricao'))
+      <small class="form-text text-danger">{{ getErrorFor('descricao') }}</small>
+    @endif
+  </div>
+
+  <div class="form-group">
+    <label for="data_provavel_sorteio">Data Sorteio</label>
+    <input type="datetime-local" class="form-control" id="data_provavel_sorteio" name="data_provavel_sorteio" value="{{ old('data_provavel_sorteio', rifa.data_provavel_sorteio || '') }}">
+    @if(hasErrorFor('data_provavel_sorteio'))
+      <small class="form-text text-danger">{{ getErrorFor('data_provavel_sorteio') }}</small>
+    @endif
+  </div>
+
+  <div class="form-group">
+    <label for="rifa_data_inicio">Data Inicio de Venda</label>
+    <input type="datetime-local" class="form-control" id="rifa_data_inicio" name="data_inicio_venda" value="{{ old('data_inicio_venda', rifa.data_inicio_venda || '') }}">
+    @if(hasErrorFor('data_inicio_venda'))
+      <small class="form-text text-danger">{{ getErrorFor('data_inicio_venda') }}</small>
+    @endif
+  </div>
+
+  <div class="form-group">
+    <label for="rifa_data_final">Data Fim de Venda</label>
+    <input type="datetime-local" class="form-control" id="rifa_data_final" name="data_fim_venda" value="{{ old('data_fim_venda', rifa.data_fim_venda || '') }}">
+    @if(hasErrorFor('data_fim_venda'))
+      <small class="form-text text-danger">{{ getErrorFor('data_fim_venda') }}</small>
+    @endif
+  </div>
+
+  <div class="form-group">
+    <label for="rifa_data_sorteio">Data Sorteio Final</label>
+    <input type="datetime-local" class="form-control" id="rifa_data_sorteio" name="data_sorteio" value="{{ old('data_sorteio', rifa.data_sorteio || '') }}">
+    @if(hasErrorFor('data_sorteio'))
+      <small class="form-text text-danger">{{ getErrorFor('data_sorteio') }}</small>
+    @endif
+  </div>
+
+  <div class="form-group">
+    <label for="rifa_valor">Valor</label>
+    <input type="text" class="form-control" id="rifa_valor" name="valor_bilhete" value="{{ old('valor_bilhete', rifa.valor_bilhete || '') }}">
+    @if(hasErrorFor('valor_bilhete'))
+      <small class="form-text text-danger">{{ getErrorFor('valor_bilhete') }}</small>
+    @endif
+  </div>
+
+  <button type="submit" class="btn btn-primary">Salvar</button>
+  <a href="{{ route('rifas.index') }}" class="btn btn-link">Cancelar</a>
+</form>

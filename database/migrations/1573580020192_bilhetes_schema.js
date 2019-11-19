@@ -11,7 +11,7 @@ class BilhetesSchema extends Schema {
         .integer("rifa_id")
         .unsigned()
         .references("id")
-        .inTable("rifa")
+        .inTable("rifas")
         .notNullable();
       table
         .integer("user_id")

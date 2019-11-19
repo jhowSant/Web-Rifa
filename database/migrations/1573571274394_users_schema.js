@@ -9,14 +9,14 @@ class UsersSchema extends Schema {
       table.increments();
       // table.integer('user_id').unsigned().references('id').inTable('users');  chave vermelhinha
       table
-        .string("nome", 80)
+        .string("username", 80)
         .notNullable()
         .unique();
       table
         .string("email", 254)
         .notNullable()
         .unique();
-      table.string("senha", 60).notNullable();
+      table.string("password", 60).notNullable();
       table.boolean("admin").defaultTo(false).notNullable();
       table.timestamps();
     });
