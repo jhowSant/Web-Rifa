@@ -30,6 +30,8 @@ class PremioController {
    * @param {View} ctx.view
    */
   async create ({ request, response, view }) {
+    const premio = new Premio();
+    return view.render("rifas.show", { premio });
   }
 
   /**

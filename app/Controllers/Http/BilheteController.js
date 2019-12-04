@@ -1,5 +1,8 @@
 'use strict'
 
+const Bilhete = use("App/Models/Bilhete");
+const Rifa = use("App/Models/Rifa");
+
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
@@ -29,7 +32,12 @@ class BilheteController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async create ({ request, response, view }) {
+  async create ({ request, response, view}) {
+    
+    const bilhete = new Bilhete();
+    return view.render("rifas.verBilhetes", { bilhete });
+
+    
   }
 
   /**
@@ -41,6 +49,7 @@ class BilheteController {
    * @param {Response} ctx.response
    */
   async store ({ request, response }) {
+
   }
 
   /**
@@ -52,7 +61,11 @@ class BilheteController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params, request, response, view }) {
+  async show ({ params, request, response, auth }) {
+    const bilhete = await Bilhete.find(params.id);
+    bilhete.user_id = auth.user.id;    
+    await bilhete.save();
+    response.route('rifas.show', { id: bilhete.rifa_id });
   }
 
   /**
@@ -65,6 +78,7 @@ class BilheteController {
    * @param {View} ctx.view
    */
   async edit ({ params, request, response, view }) {
+    
   }
 
   /**
@@ -76,6 +90,7 @@ class BilheteController {
    * @param {Response} ctx.response
    */
   async update ({ params, request, response }) {
+   
   }
 
   /**

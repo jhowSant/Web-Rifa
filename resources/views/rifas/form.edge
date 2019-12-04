@@ -18,14 +18,6 @@
   </div>
 
   <div class="form-group">
-    <label for="data_provavel_sorteio">Data Sorteio</label>
-    <input type="datetime-local" class="form-control" id="data_provavel_sorteio" name="data_provavel_sorteio" value="{{ old('data_provavel_sorteio', rifa.data_provavel_sorteio || '') }}">
-    @if(hasErrorFor('data_provavel_sorteio'))
-      <small class="form-text text-danger">{{ getErrorFor('data_provavel_sorteio') }}</small>
-    @endif
-  </div>
-
-  <div class="form-group">
     <label for="rifa_data_inicio">Data Inicio de Venda</label>
     <input type="datetime-local" class="form-control" id="rifa_data_inicio" name="data_inicio_venda" value="{{ old('data_inicio_venda', rifa.data_inicio_venda || '') }}">
     @if(hasErrorFor('data_inicio_venda'))
@@ -51,11 +43,18 @@
 
   <div class="form-group">
     <label for="rifa_valor">Valor</label>
-    <input type="text" class="form-control" id="rifa_valor" name="valor_bilhete" value="{{ old('valor_bilhete', rifa.valor_bilhete || '') }}">
+    <input type="number" class="form-control" id="rifa_valor" name="valor_bilhete" value="{{ old('valor_bilhete', rifa.valor_bilhete || '') }}">
     @if(hasErrorFor('valor_bilhete'))
       <small class="form-text text-danger">{{ getErrorFor('valor_bilhete') }}</small>
     @endif
   </div>
+
+  <div class="form-group">
+      <label for="tipo_rifas">Tipos de Rifas</label>
+      <select id="leadType" class="box2" name="lead_type">
+          <option value="1">TESTE</option>
+      </select>
+    </div>
 
   <button type="submit" class="btn btn-primary">Salvar</button>
   <a href="{{ route('rifas.index') }}" class="btn btn-link">Cancelar</a>

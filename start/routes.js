@@ -24,5 +24,11 @@ Route.any("/", ({ response }) => response.redirect("/login"));
 
 
   Route.resource('rifas', 'RifaController');
+  Route.resource('bilhetes', 'BilheteController');
+  // Route.resource('tipos', 'TipoController');
 
+  // Route.get('/tarefas/:id/concluida', 'TarefaController.concluida')
+  // .as('tarefas.concluida');
+
+  Route.post('/rifas/:id', 'RifaController.premio')
 

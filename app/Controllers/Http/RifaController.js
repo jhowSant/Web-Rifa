@@ -1,6 +1,8 @@
 "use strict";
 
 const Rifa = use("App/Models/Rifa");
+const Premio = use("App/Models/Premio");
+const Bilhete = use("App/Models/Bilhete");
 // const Observacao = use('App/Models/Observacao');
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
@@ -21,7 +23,12 @@ class RifaController {
    * @param {View} ctx.view
    */
   async index({ request, response, view, auth }) {
-    return view.render("rifas.index", {});
+    const rifas = (
+      await Rifa.query()
+        .orderBy("updated_at", "desc")
+        .fetch()
+    ).rows;
+    return view.render("rifas.index", { rifas });
   }
 
   /**
@@ -36,7 +43,6 @@ class RifaController {
   async create({ request, response, view }) {
     const rifa = new Rifa();
     return view.render("rifas.create", { rifa });
-
   }
 
   /**
@@ -48,9 +54,22 @@ class RifaController {
    * @param {Response} ctx.response
    */
   async store({ request, response, auth }) {
-    const rifaData = request.only(["titulo", "descricao","data_provavel_sorteio","data_inicio_venda","data_fim_venda","data_sorteio","valor_bilhete"]);
+    const rifaData = request.only([
+      "titulo",
+      "descricao",
+      "data_inicio_venda",
+      "data_fim_venda",
+      "data_sorteio",
+      "valor_bilhete"
+    ]);
     rifaData.user_id = auth.user.id;
     const rifa = await Rifa.create(rifaData);
+
+    //BILHETE
+
+    for (let i = 1; i <= 10; i++) {
+      await Bilhete.create({ rifa_id: rifa.id, numero: i });
+    }
     response.route("rifas.show", { id: rifa.id });
   }
 
@@ -63,8 +82,15 @@ class RifaController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({ params, request, response, view, rifa }) {
-    return view.render("rifas.show", { rifa });
+  async show({ params, request, response, view,auth }) {
+    const rifa = await Rifa.find(params.id);
+    await rifa.load("bilhetes");
+    const bilhetes = rifa.getRelated("bilhetes").rows;
+    const hoje = Date.now();
+    rifa.user_id = auth.user.id;
+    const usuario = rifa.user_id;
+    
+    return view.render("rifas.show", { rifa, bilhetes, hoje});
   }
 
   /**
@@ -76,7 +102,10 @@ class RifaController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async edit({ params, request, response, view }) {}
+  async edit({ params, request, response, view, rifa }) {
+    
+    return view.render('rifas.edit', { rifa });
+  }
 
   /**
    * Update rifa details.
@@ -86,7 +115,17 @@ class RifaController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update({ params, request, response }) {}
+  async update({ params, request, response, rifa }) {
+    const rifaData = request.only(["titulo",
+    "descricao",
+    "data_inicio_venda",
+    "data_fim_venda",
+    "data_sorteio",
+    "valor_bilhete"]);
+    rifa.merge(rifaData);
+    await rifa.save();
+    response.route('rifas.show', { id: params.id });
+  }
 
   /**
    * Delete a rifa with id.
@@ -97,6 +136,17 @@ class RifaController {
    * @param {Response} ctx.response
    */
   async destroy({ params, request, response }) {}
+ 
+  async premio({ request, response, premio }) {
+  
+    const premioData = request.only(['descricao',"colocacao"]);
+    premioData.rifa_id = premio.id;
+    premioData.descricao = premio.descricao;
+    premioData.colocacao = premio.colocacao;
+    await Premio.create(premioData);
+    response.route('rifas.show', { id: rifa.id });
+  
+}
 }
 
 module.exports = RifaController;

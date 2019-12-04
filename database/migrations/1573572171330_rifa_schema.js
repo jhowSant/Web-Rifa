@@ -17,11 +17,10 @@ class RifaSchema extends Schema {
         .integer("tipo_id")
         .unsigned()
         .references("id")
-        .inTable("tipos")
-        .notNullable();
+        .inTable("tipos");
       table.string("titulo", 45).notNullable();
       table.text("descricao");
-      table.datetime("data_provavel_sorteio").notNullable();
+      table.datetime("data_provavel_sorteio");
       table.datetime("data_inicio_venda").notNullable();
       table.datetime("data_fim_venda").notNullable();
       table.datetime("data_sorteio");

@@ -1,5 +1,7 @@
 'use strict'
 
+const Tipo = use("App/Models/Tipo");
+
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
@@ -18,6 +20,7 @@ class TipoController {
    * @param {View} ctx.view
    */
   async index ({ request, response, view }) {
+    return view.render("tipos.index", {});
   }
 
   /**
@@ -30,6 +33,8 @@ class TipoController {
    * @param {View} ctx.view
    */
   async create ({ request, response, view }) {
+    const tipo = new Tipo();
+    return view.render("tipos.create", { tipo });
   }
 
   /**
@@ -40,7 +45,11 @@ class TipoController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
+  async store ({ request, response, auth }) {
+    const tipoData = request.only(["descricao","numero_inicial","passo","quantidade_bilhetes"]);
+    tipoData.user_id = auth.user.id;
+    const tipo = await Tipo.create(tipoData);
+    response.route("tipos.show", { id: tipo.id });
   }
 
   /**
@@ -52,7 +61,8 @@ class TipoController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params, request, response, view }) {
+  async show ({ params, request, response, view, tipo }) {
+    return view.render("tipos.show", { tipo });
   }
 
   /**

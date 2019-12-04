@@ -4,6 +4,16 @@
 const Model = use('Model')
 
 class Bilhete extends Model {
+
+    rifa() {
+        return this.belongsTo("App/Models/Rifa");
+      }
+
+
+
+user() {
+  return this.belongsTo("App/Models/User");
 }
 
+}
 module.exports = Bilhete

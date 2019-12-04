@@ -38,6 +38,12 @@ class User extends Model {
   rifas() {
     return this.hasMany('App/Models/Rifa');
   }
+  bilhetesComprados() {
+    return this.hasMany("App/Models/Bilhete");
+    }
+  rifasCompradas() {
+    return this.manyThrough("App/Models/Bilhete", "rifa");
+  }
 }
 
 module.exports = User;
