@@ -1,0 +1,32 @@
+@layout('layout.master')
+
+
+@section('conteudo')
+  <div class="text-center">
+    <h2>Minhas Rifas</h2>
+    <a href="{{ route('rifas.create') }}" class="btn btn-primary btn-lg mb-4">Nova Rifa</a>
+    <div class="row justify-content-center">
+      <div class="col-lg-6 card text-left">
+        <ul class="list-group list-group-flush">
+          @each(rifa in rifas)
+            <li class="list-group-item d-flex justify-content-between align-items-center" style="font-size: 150%">
+
+              <div>
+                
+                <a class="text-{{ rifa.titulo }}" href="{{ route('rifas.show', { id: rifa.id }) }}">
+                
+                  {{ rifa.titulo }}
+                </a>
+              </div>
+
+              @if(rifa.premios_count > 0)
+                <span class="badge badge-warning">{{ rifa.premios_count }}</span>
+              @endif
+
+            </li>
+          @endeach
+        </ul>
+      </div>
+    </div>
+  </div>
+@endsection
